@@ -85,7 +85,7 @@ return {
     Circle = " ",
     Close = "󰅖",
     CloudDownload = " ",
-    Code = "",
+    Code = " ",
     Comment = "",
     Dashboard = "",
     DividerLeft = "",

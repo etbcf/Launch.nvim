@@ -10,17 +10,16 @@ local M = {
 }
 
 function M.config()
-  -- Direct key mapping for commenting
-  local opts = { noremap = true, silent = true }  -- Common options for the keymap
+  local wk = require "which-key"
+  wk.add {
+    { "<leader>/", "<Plug>(comment_toggle_linewise_current)", desc = "Comment" },
+  }
 
-  -- Normal mode keymap for toggling comment
-  vim.api.nvim_set_keymap("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)", opts)
-
-  -- Visual mode keymap for toggling comment
-  vim.api.nvim_set_keymap("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)", opts)
+  wk.add {
+    { "<leader>/", "<Plug>(comment_toggle_linewise_visual)", desc = "Comment", mode = "v" },
+  }
 
   vim.g.skip_ts_context_commentstring_module = true
-
   ---@diagnostic disable: missing-fields
   require("ts_context_commentstring").setup {
     enable_autocmd = false,
@@ -32,4 +31,3 @@ function M.config()
 end
 
 return M
-

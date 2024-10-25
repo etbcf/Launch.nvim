@@ -18,8 +18,11 @@ return {
       end,
     })
 
-    vim.keymap.set("n", "<leader>l", function()
-      lint.try_lint()
-    end, { desc = "Trigger linting for current file" })
+    -- Register with which-key using the suggested spec format
+    local wk = require("which-key")
+    wk.add({
+      { "<leader>L", "<cmd>lua require('lint').try_lint()<CR>", desc = "Trigger linting for current file" },
+    })
   end,
 }
+

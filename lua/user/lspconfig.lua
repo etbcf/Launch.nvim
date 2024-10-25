@@ -8,33 +8,18 @@ local M = {
   },
 }
 
--- Function to set LSP keymaps
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
-
-  -- Standard LSP mappings
   keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
   keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
   keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
   keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-
-  -- Custom leader key mappings for LSP without which-key
-  keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<CR>", opts)
-  keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<CR>", opts)
-  keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lh", "<cmd>lua require('user.lspconfig').toggle_inlay_hints()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-  keymap(bufnr, "n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)
-  -- Apply the LSP keymaps to the buffer
   lsp_keymaps(bufnr)
 
   if client.supports_method "textDocument/inlayHint" then
@@ -54,6 +39,22 @@ M.toggle_inlay_hints = function()
 end
 
 function M.config()
+  local wk = require "which-key"
+  wk.add {
+    { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action" },
+    { "<leader>lf",
+      "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<cr>",
+      desc = "Format",
+    },
+    { "<leader>li", "<cmd>LspInfo<cr>", desc = "Info" },
+    { "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<cr>", desc = "Next Diagnostic" },
+    {"<leader>lh", "<cmd>lua require('user.lspconfig').toggle_inlay_hints()<cr>", desc = "Hints" },
+    {"<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<cr>", desc = "Prev Diagnostic" },
+    {"<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", desc = "CodeLens Action" },
+    {"<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix" },
+    {"<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
+  }
+
   local lspconfig = require "lspconfig"
   local icons = require "user.icons"
 
@@ -123,4 +124,3 @@ function M.config()
 end
 
 return M
-

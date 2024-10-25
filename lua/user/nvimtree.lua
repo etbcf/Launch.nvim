@@ -4,9 +4,10 @@ local M = {
 }
 
 function M.config()
-  -- Directly map the key for toggling NvimTree
-  local opts = { noremap = true, silent = true }  -- Common options for the keymap
-  vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", opts)
+  local wk = require "which-key"
+  wk.add {
+    {"<leader>e", "<cmd>NvimTreeToggle<CR>", desc = "Explorer" },
+  }
 
   local icons = require "user.icons"
 
@@ -93,4 +94,3 @@ function M.config()
 end
 
 return M
-
