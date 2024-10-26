@@ -13,7 +13,7 @@ return {
     spec = {}, -- You can add your custom mappings here
     notify = true,
     triggers = {
-      { "<auto>", mode = "nxso" },
+      { "<leader>", mode = "nxso" },
     },
     defer = function(ctx)
       return ctx.mode == "V" or ctx.mode == "<C-V>"

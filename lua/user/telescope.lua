@@ -4,21 +4,22 @@ local M = {
 }
 
 function M.config()
-  -- Set up your mappings directly with `vim.api.nvim_set_keymap`
-  local opts = { noremap = true, silent = true }  -- Common options for all keymaps
-
-  vim.api.nvim_set_keymap("n", "<leader>bb", "<cmd>Telescope buffers previewer=false<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>Telescope git_branches<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>Telescope colorscheme<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fp", "<cmd>lua require('telescope').extensions.projects.projects()<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>ft", "<cmd>Telescope live_grep<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fl", "<cmd>Telescope resume<cr>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", opts)
+  local wk = require "which-key"
+  wk.add {
+    { "<leader>bb", "<cmd>Telescope buffers previewer=false<CR>", desc = "Find" },
+    { "<leader>fb", "<cmd>Telescope git_branches<CR>", desc = "Checkout branch" },
+    { "<leader>fc", "<cmd>Telescope colorscheme<CR>", desc = "Colorscheme" },
+    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+    { "<leader>fp", "<cmd>lua require('telescope').extensions.projects.projects()<CR>", desc = "Projects" },
+    { "<leader>ft", "<cmd>Telescope live_grep<CR>", desc = "Find Text" },
+    { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help" },
+    { "<leader>fl", "<cmd>Telescope resume<CR>", desc = "Last Search" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent File" },
+  }
 
   local icons = require "user.icons"
   local actions = require "telescope.actions"
+
 
   require("telescope").setup {
     defaults = {
@@ -126,4 +127,3 @@ function M.config()
 end
 
 return M
-
