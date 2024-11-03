@@ -8,22 +8,10 @@ local M = {
   },
 }
 
-M.on_attach = function(client, bufnr)
-
-  if client.supports_method "textDocument/inlayHint" then
-    vim.lsp.inlay_hint.enable(bufnr, true)
-  end
-end
-
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   return capabilities
-end
-
-M.toggle_inlay_hints = function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  vim.lsp.inlay_hint.enable(bufnr, not vim.lsp.inlay_hint.is_enabled(bufnr))
 end
 
 function M.config()
@@ -41,12 +29,12 @@ function M.config()
     { "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", desc = "CodeLens Action" },
     { "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix" },
     { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
-    { "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Go to Declaration" },
-    { "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", desc = "Go to Definition" },
+    { "<leader>sD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "Go to Declaration" },
+    { "<leader>sd", "<cmd>lua vim.lsp.buf.definition()<CR>", desc = "Go to Definition" },
     { "<leader>K", "<cmd>lua vim.lsp.buf.hover()<CR>", desc = "Hover Documentation" },
-    { "<leader>gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Go to Implementation" },
-    { "<leader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", desc = "Show References" },
-    { "<leader>gl", "<cmd>lua vim.diagnostic.open_float()<CR>", desc = "Show Diagnostics" },
+    { "<leader>sI", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "Go to Implementation" },
+    { "<leader>sr", "<cmd>lua vim.lsp.buf.references()<CR>", desc = "Show References" },
+    { "<leader>sl", "<cmd>lua vim.diagnostic.open_float()<CR>", desc = "Show Diagnostics" },
   }
 
   local lspconfig = require "lspconfig"
@@ -56,12 +44,9 @@ function M.config()
     "lua_ls",
     "cssls",
     "html",
-    "eslint",
-    "ts_ls",
     "pyright",
     "bashls",
     "jsonls",
-    "yamlls",
   }
 
   local default_diagnostic_config = {
